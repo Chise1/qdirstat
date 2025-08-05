@@ -1,0 +1,30 @@
+version: "1"
+
+package:
+  id: com.github.Chise1.qdirstat    # 软件包 appid，类似 deb 格式软件包包名，区分不同玲珑格式软件包
+  name: qdirstat    # 应用名称
+  kind: app
+  version: 1.9.0.0    # 软件包版本
+  description: |
+    QDirStat - Qt-based directory statistics (KDirStat without any KDE - from the original KDirStat author)
+
+command:
+  - /opt/apps/com.github.Chise1.qdirstat/files/bin/qdirstat
+
+
+base: org.deepin.base/23.1.0
+runtime: org.deepin.runtime.dtk/23.1.0
+
+build: |  
+  qmake INSTALL_PREFIX=$PREFIX 
+  make 
+  make install
+
+buildext:
+  apt:
+    build_depends: # 构建时依赖，仅在构建环境中安装
+      - zlib1g-dev
+#       - build-essential
+#     depends: # 运行时依赖，会包含在最终的应用或运行时中
+#       - libqt6widgets6
+#       - libglib2.0-0
